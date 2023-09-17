@@ -1,0 +1,6 @@
+.vl {
+  border-left: 3px solid var(--gray-white);
+  margin: 0;
+  height: 160%;
+  opacity: 100%;
+}

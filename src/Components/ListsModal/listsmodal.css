@@ -1,0 +1,13 @@
+.btn-xxl {
+  font-size: 2em;
+}
+/* Custom CSS for the checkbox label */
+.accent-yellow::before {
+  border-color: var(--yellow) !important;
+  background-color: var(--yellow) !important;
+}
+
+/* Custom CSS for the checkbox label text */
+.accent-yellow {
+  color: var(--yellow) !important;
+}

@@ -1,0 +1,34 @@
+.navbar-brand {
+  font-size: 1.5rem;
+  margin-left: 16px;
+}
+
+.navbar-brand,
+.nav-link {
+  color: var(--black);
+}
+
+nav {
+  background: var(--white);
+  /* border-radius: 20px;
+  margin: 1%; */
+}
+
+.inactive {
+  opacity: 0;
+  filter: blur(2px);
+  transform: translateY(10%);
+  transition: all 0.4s;
+}
+.active {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateX(0);
+}
+
+.delay-200 {
+  transition-delay: 300ms;
+}
+.delay-400 {
+  transition-delay: 500ms;
+}
