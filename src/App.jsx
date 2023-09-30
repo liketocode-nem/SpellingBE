@@ -1,18 +1,20 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
-import "./index.css";
+
 import SpellingBENavbar from "./Components/Navbar/Navbar";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import Home from "./pages/Home/Home";
+import Test from "./pages/Test/Test";
 import ScrollAnimations from "./Components/ScrollAnimations/ScrollAnimations";
 import Lists from "./pages/Lists/Lists";
-import { Routes, Route, redirect } from "react-router-dom";
+import { Routes, Route, redirect, useLocation } from "react-router-dom";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 import { useAuthState } from "react-firebase-hooks/auth";
 
 import { getFirestore } from "firebase/firestore";
+import { useEffect } from "react";
 
 function App() {
   const firebaseConfig = {
@@ -33,20 +35,22 @@ function App() {
   const page = user ? (
     <Home user={user} firestore={firestore} />
   ) : (
-    <LandingPage />
+    <LandingPage auth={auth} user={user} />
   );
-  const left = user
-    ? ["Lists", "Analytics", "Sharing"]
-    : ["About", "Features", "Get Started"];
+
   return (
     <>
       <ScrollAnimations />
-      <SpellingBENavbar auth={auth} user={user} left={left} />
+      <SpellingBENavbar auth={auth} user={user} />
       <Routes>
         <Route path="/" element={page} />
 
         <Route
-          path="/Lists"
+          path="/test"
+          element={<Test user={user} firestore={firestore} />}
+        />
+        <Route
+          path="/lists"
           element={<Lists user={user} firestore={firestore} />}
         />
       </Routes>

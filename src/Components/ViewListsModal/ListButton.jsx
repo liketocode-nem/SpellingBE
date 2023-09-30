@@ -1,15 +1,32 @@
-import { useState } from "react";
-import { Modal, Button, Container, Row, Col, Form } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import {
+  Modal,
+  Button,
+  Container,
+  Row,
+  Col,
+  Form,
+  InputGroup,
+} from "react-bootstrap";
 import { setDoc, doc } from "firebase/firestore";
 import "./viewlistsmodal.css";
 
-function ListButton({ list, firestore, setO }) {
+function ListButton({
+  list,
+  firestore,
+  setO,
+
+  reload,
+}) {
   const [show, setShow] = useState(false);
   const [add, setAdd] = useState(false);
   const [words, setWords] = useState([...list.data().words]);
   const [defs, setDefs] = useState([...list.data().defs]);
   const [word, setWord] = useState("");
   const [def, setDef] = useState("");
+  const [problem, setProblem] = useState("");
+  //to make sure delete and list modal do not open at the same time
+  const [click, setClick] = useState(false);
 
   const handleListUpdate = async () => {
     await setDoc(doc(firestore, "lists", list.id), {
@@ -18,31 +35,31 @@ function ListButton({ list, firestore, setO }) {
       title: list.data().title,
       uid: list.data().uid,
     });
-    setShow(false);
-    setO("");
   };
 
   const handleItemDelete = (i) => {
     if (words.length > 1) {
-      console.log(words);
-      const newWords = words.splice(i, 1);
-      const newDefs = defs.splice(i, 1);
-      setWords(newWords);
-      console.log(words);
-      setDefs(newDefs);
+      setWord(words.splice(i, 1));
+      setDef(defs.splice(i, 1));
     }
   };
 
-  const handleItemAdd = () => {
-    setWords([word, ...words]);
-    setDefs([def, ...defs]);
-    setWord("");
-    setDef("");
+  const handleItemAdd = (e) => {
+    e.preventDefault();
+    if (word) {
+      setWords([word, ...words]);
+      def ? setDefs([def, ...defs]) : setDefs(["No definition", ...defs]);
+      setWord("");
+      setDef("");
+      return;
+    }
+    setProblem("Word is blank");
   };
   return (
     <>
       <Button
-        className="rounded-circle"
+        style={{ borderRadius: " 0 .375rem .375rem 0 " }}
+        className="w-100 h-100 list"
         onClick={() => {
           setShow(true);
           setO("o");
@@ -50,15 +67,27 @@ function ListButton({ list, firestore, setO }) {
         variant="white-full"
       >
         {" "}
-        <i className="bi bi-pencil-fill"></i>
+        {list.data().title.length > 30
+          ? `${list.data().title.slice(1, 30)}...`
+          : list.data().title}
       </Button>
-      <Modal centered show={show} onHide={handleListUpdate}>
+
+      <Modal
+        centered
+        show={show}
+        onHide={() => {
+          handleListUpdate();
+          setShow(false);
+          setO("");
+        }}
+      >
         <Modal.Header>
           <Modal.Title className="fw-bold">Edit and View List</Modal.Title>
         </Modal.Header>
+
         <Modal.Body>
           <Container
-            className="d-flex flex-column h-100 justify-content-center"
+            className="d-flex  flex-column  justify-content-center"
             fluid
           >
             <Button
@@ -70,7 +99,8 @@ function ListButton({ list, firestore, setO }) {
             >
               <i className="bi bi-plus-lg"></i>
             </Button>
-            <Row className="pt-2 pb-2  ">
+
+            <Row style={{ paddingLeft: "15px" }} className="pt-2 pb-2  ">
               <Col sm={1}></Col>
               <Col
                 sm={5}
@@ -82,7 +112,7 @@ function ListButton({ list, firestore, setO }) {
                 sm={1}
                 className="text-center  d-flex justify-content-center align-items-center"
               >
-                <div className="vl"></div>
+                <div className="vll"></div>
               </Col>
               <Col
                 sm={5}
@@ -91,59 +121,64 @@ function ListButton({ list, firestore, setO }) {
                 Definitions
               </Col>
             </Row>
-            {words.map((word, i) => {
-              return (
-                <Row key={i} className="pt-2 pb-2  ">
-                  <Col
-                    sm={1}
-                    className=" d-flex justify-content-center align-items-center"
-                  >
-                    <Button
-                      className="rounded-circle"
-                      onClick={() => handleItemDelete(i)}
-                      variant="white-full"
+            <div
+              style={{ maxHeight: "67vh", minWidth: "100%" }}
+              className="over"
+            >
+              {words.map((word, i) => {
+                return (
+                  <Row key={i} className="pt-2 pb-2  ">
+                    <Col
+                      sm={1}
+                      className=" d-flex justify-content-center align-items-center"
                     >
-                      {" "}
-                      <i className="bi bi-trash-fill"></i>
-                    </Button>
-                  </Col>
-                  <Col
-                    sm={5}
-                    className=" d-flex justify-content-center align-items-center"
-                  >
-                    <Form.Control
-                      value={words[i]}
-                      onChange={(e) => {
-                        const updatedWords = [...words];
-                        updatedWords[i] = e.target.value;
-                        setWords(updatedWords);
-                      }}
-                      placeholder="Word"
-                    />
-                  </Col>
-                  <Col
-                    sm={1}
-                    className="  d-flex justify-content-center align-items-center"
-                  >
-                    <div className="vl"></div>
-                  </Col>
-                  <Col
-                    sm={5}
-                    className="  d-flex justify-content-center align-items-center"
-                  >
-                    <Form.Control
-                      value={defs[i]}
-                      onChange={(e) => {
-                        const updatedDefs = [...defs];
-                        updatedDefs[i] = e.target.value;
-                        setDefs(updatedDefs);
-                      }}
-                      placeholder="Word"
-                    />
-                  </Col>
-                </Row>
-              );
-            })}
+                      <Button
+                        className="rounded-circle "
+                        onClick={() => handleItemDelete(i)}
+                        variant="white-full"
+                      >
+                        {" "}
+                        <i className="bi  bi-trash-fill "></i>
+                      </Button>
+                    </Col>
+                    <Col
+                      sm={5}
+                      className=" d-flex justify-content-center align-items-center"
+                    >
+                      <Form.Control
+                        value={words[i]}
+                        onChange={(e) => {
+                          const updatedWords = [...words];
+                          updatedWords[i] = e.target.value;
+                          setWords(updatedWords);
+                        }}
+                        placeholder="Word"
+                      />
+                    </Col>
+                    <Col
+                      sm={1}
+                      className="  d-flex justify-content-center align-items-center"
+                    >
+                      <div className="vl"></div>
+                    </Col>
+                    <Col
+                      sm={5}
+                      className="  d-flex justify-content-center align-items-center"
+                    >
+                      <Form.Control
+                        value={defs[i]}
+                        onChange={(e) => {
+                          const updatedDefs = [...defs];
+                          updatedDefs[i] = e.target.value;
+                          setDefs(updatedDefs);
+                        }}
+                        placeholder="Definition"
+                      />
+                    </Col>
+                  </Row>
+                );
+              })}
+            </div>
           </Container>
         </Modal.Body>
       </Modal>
@@ -152,16 +187,21 @@ function ListButton({ list, firestore, setO }) {
         onHide={() => {
           setAdd(false);
           setShow(true);
+          handleListUpdate();
         }}
         show={add}
       >
+        <Modal.Header>
+          <Modal.Title className="fw-bold">Add Items</Modal.Title>
+        </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={(e) => e.preventDefault()}>
+          <Form onSubmit={handleItemAdd}>
             <div className="d-flex flex-column gap-2">
               <Form.Control
                 value={word}
                 onChange={(e) => {
                   setWord(e.target.value);
+                  setProblem("");
                 }}
                 placeholder="Word"
               />
@@ -169,24 +209,21 @@ function ListButton({ list, firestore, setO }) {
                 value={def}
                 onChange={(e) => {
                   setDef(e.target.value);
+                  setProblem("");
                 }}
                 placeholder="Definition"
               />
-              <Button onClick={handleItemAdd} variant="yellow">
+              <Button type="submit" variant="yellow">
                 Add
-              </Button>
-              <Button
-                onClick={() => {
-                  setAdd(false);
-                  setShow(true);
-                }}
-                variant="white"
-              >
-                Save
               </Button>
             </div>
           </Form>
         </Modal.Body>
+        {problem && (
+          <Modal.Footer className="d-flex justify-content-start fw-semibold text-yellow">
+            {problem}
+          </Modal.Footer>
+        )}
       </Modal>
     </>
   );

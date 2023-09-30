@@ -8,11 +8,13 @@ body {
   --white: #eff2f1;
   --gray-white: #d2d4d4;
   --black: #131316;
-  --gray: #535357;
+  --gray-black: #4e4e52;
   --yellow: #f39e1f;
   --gray-yellow: #f78809;
   --basic: #2b7ec7;
+  --gray-basic: #266ead;
   --pro: #37c59d;
+
   --gray-pro: #00a171;
 }
 
@@ -99,45 +101,6 @@ section {
 
 .delay-400 {
   transition-delay: 700ms;
-}
-
-.btn-white {
-  background: var(--white);
-  color: var(--black);
-  transition: all 0.4s;
-}
-.btn-white-circle {
-  background: white;
-  color: var(--black);
-
-  transition: all 0.4s;
-}
-
-.btn-yellow {
-  background: var(--yellow);
-  color: var(--white) !important;
-}
-
-.btn-pro {
-  background: var(--pro);
-  color: var(--white);
-}
-
-.btn-pro:hover {
-  background: var(--gray-pro);
-  color: var(--white);
-}
-
-.btn-white:hover {
-  background: var(--gray-white);
-}
-
-.btn-white-full:hover {
-  background: var(--gray-white);
-}
-
-.btn-yellow:hover {
-  background: var(--gray-yellow);
 }
 
 .button-container {

@@ -7,16 +7,34 @@ import {
   Row,
   Container,
 } from "react-bootstrap";
-import ListsModal from "../../Components/ListsModal/ListsModal";
+import { Link } from "react-router-dom";
+import { useSessionStorage } from "@uidotdev/usehooks";
+
+import SelectListsModal from "../../Components/SelectListsModal/SelectListsModal";
 import "./home.css";
 
 function Home({ user, auth, firestore }) {
+  const [count, setCount] = useSessionStorage("c", 0);
+  const [testing, setTesting] = useSessionStorage("testing", false);
+
   return (
     <section className="white">
       <Card className=" shadow-sm">
         <Card.Body>
           <div className="d-flex flex-column h-100 justify-content-center gap-3 ">
-            <ListsModal firestore={firestore} user={user} auth={auth} />
+            <SelectListsModal firestore={firestore} user={user} auth={auth} />
+            <Button
+              className="fw-bold fs-3"
+              variant="yellow"
+              as={Link}
+              to="/test"
+              onClick={() => {
+                setCount(0);
+                setTesting(true);
+              }}
+            >
+              Start
+            </Button>
           </div>
         </Card.Body>
       </Card>
@@ -24,41 +42,3 @@ function Home({ user, auth, firestore }) {
   );
 }
 export default Home;
-
-//   <Container fluid>
-//     <Row>
-//       <Col className="d-flex justify-content-center">
-//         <ButtonGroup vertical>
-//           <Button size="xxl" variant="outline-white">
-//             Hello
-//           </Button>
-//           <Button size="xxl" variant="outline-white">
-//             Hello
-//           </Button>
-//           <Button size="xxl" variant="outline-white">
-//             Hello
-//           </Button>
-//         </ButtonGroup>
-//       </Col>
-//       <Col className="d-flex justify-content-center">
-//         <ButtonGroup vertical>
-//           <Button size="xxl" variant="yellow">
-//             Hello
-//           </Button>
-//           <Button size="xxl" variant="yellow">
-//             Hello
-//           </Button>
-//           <Button size="xxl" variant="yellow">
-//             Hello
-//           </Button>
-//         </ButtonGroup>
-//       </Col>
-//       <Col className="d-flex justify-content-center">
-//         <ButtonGroup vertical>
-//           <Button size="xxl" variant="pro">
-//             Start
-//           </Button>
-//         </ButtonGroup>
-//       </Col>
-//     </Row>
-//   </Container>

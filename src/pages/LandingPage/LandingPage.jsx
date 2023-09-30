@@ -1,8 +1,17 @@
 import React from "react";
 import { Container, Col, Row, Button } from "react-bootstrap";
 import "./landingpage.css";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
-function LandingPage() {
+function LandingPage({ auth, user }) {
+  const handleAuth = () => {
+    if (!user) {
+      const provider = new GoogleAuthProvider();
+      signInWithPopup(auth, provider).then(() => {});
+    }
+
+    auth.signOut();
+  };
   return (
     <div>
       <section id="spellingbe" className="white">
@@ -138,7 +147,12 @@ function LandingPage() {
             Demo
           </Button>{" "}
           <div className="vl"></div>
-          <Button style={{ marginTop: "6vh" }} variant="yellow" size="lg">
+          <Button
+            style={{ marginTop: "6vh" }}
+            onClick={handleAuth}
+            variant="yellow"
+            size="lg"
+          >
             Sign Up
           </Button>{" "}
         </div>

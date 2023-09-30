@@ -29,19 +29,14 @@ function MakeListModal({ firestore, user }) {
   };
 
   const handleListAdd = () => {
-    if (word && def) {
+    if (word) {
       setWords([...words, word]);
-      setDefs([...defs, def]);
+      def ? setDefs([def, ...defs]) : setDefs(["No definition", ...defs]);
       setWord("");
       setDef("");
       return;
-    } else if (!word && def) {
-      setProblem("Word is blank");
-    } else if (word && !def) {
-      setProblem("Definition is blank");
-    } else if (!word && !def) {
-      setProblem("Word and Definition are blank");
     }
+    setProblem("Word is blank");
   };
   return (
     <>
@@ -60,6 +55,10 @@ function MakeListModal({ firestore, user }) {
         onHide={() => {
           setShow(false);
           setTitle("");
+          setDef("");
+          setDefs([]);
+          setWord("");
+          setWords([]);
         }}
         show={show}
         centered
@@ -135,3 +134,5 @@ function MakeListModal({ firestore, user }) {
   );
 }
 export default MakeListModal;
+
+// add there is no def to the functionality

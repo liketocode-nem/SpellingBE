@@ -4,3 +4,24 @@
   height: 160%;
   opacity: 100%;
 }
+
+/* longer to cover the whole left by padding */
+.vll {
+  border-left: 3px solid var(--gray-white);
+  margin: 0;
+  height: 163%;
+  opacity: 100%;
+}
+.over {
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-left: 15px;
+}
+
+.over::-webkit-scrollbar {
+  display: none;
+  max-width: 0;
+
+  padding: 0;
+  margin: 0;
+}

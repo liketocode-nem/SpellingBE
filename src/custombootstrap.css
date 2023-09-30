@@ -1,0 +1,71 @@
+.btn-white {
+  background: var(--white);
+  color: var(--black);
+  transition: all 0.4s;
+}
+
+.btn-black {
+  background: var(--black);
+  color: var(--white);
+
+  transition: all 0.4s;
+}
+
+.btn-white-full {
+  background: white;
+  color: var(--black);
+
+  transition: all 0.4s;
+}
+
+.btn-yellow {
+  background: var(--yellow);
+  color: var(--white) !important;
+  transition: all 0.4s;
+}
+
+.btn-pro {
+  background: var(--pro);
+  color: var(--white);
+  transition: all 0.4s;
+}
+.btn-basic {
+  color: var(--white);
+  transition: all 0.4s;
+}
+.list {
+  padding: 16px 2px 16px 2px;
+}
+
+.alert-yellow {
+  background: var(--yellow);
+  border-color: var(--gray-yellow);
+  color: var(--white);
+}
+
+.btn-pro:hover {
+  background: var(--gray-pro);
+  color: var(--white);
+}
+
+.btn-basic:hover {
+  background: var(--gray-basic);
+  color: var(--white);
+}
+
+.btn-white:hover {
+  background: var(--gray-white);
+}
+
+.btn-black:hover {
+  background: var(--gray-black);
+  color: var(--white);
+}
+
+.btn-yellow:hover {
+  background: var(--gray-yellow);
+}
+
+.btn-white-full:hover {
+  background: var(--gray-white);
+}

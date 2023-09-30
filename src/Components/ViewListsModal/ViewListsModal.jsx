@@ -2,12 +2,13 @@ import { useState } from "react";
 import { Button, ListGroup, Modal, Container, Row, Col } from "react-bootstrap";
 import { useCollectionOnce } from "react-firebase-hooks/firestore";
 import { collection, query, where } from "firebase/firestore";
-import ConfirmDeleteModal from "./ConfirmDeleteModal";
 import ListButton from "./ListButton";
+import ConfirmDeleteModal from "./ConfirmDeleteModal";
+
 function ViewListsModal({ firestore, user }) {
   const [show, setShow] = useState(false);
+  const [listButton, setListButton] = useState(false);
   const [o, setO] = useState("");
-
   const listRef = collection(firestore, "lists");
   let [listsData, loading, error, reload] = useCollectionOnce(
     query(listRef, where("uid", "==", user && user.uid))
@@ -43,31 +44,33 @@ function ViewListsModal({ firestore, user }) {
             {lists.length > 0 ? (
               lists.map((list) => {
                 return (
-                  <ListGroup.Item ckey={list.id}>
-                    <Container fluid>
-                      <Row className="d-flex row justify-content center text-center gap-2 align-items-center">
-                        <Col sm={1}>
-                          <ConfirmDeleteModal
-                            firestore={firestore}
-                            list={list}
-                            reload={reload}
-                            setO={setO}
-                          />{" "}
-                        </Col>
-                        <Col sm={1}>
-                          {" "}
-                          <ListButton
-                            setBigShow={setShow}
-                            firestore={firestore}
-                            list={list}
-                            setO={setO}
-                          />
-                        </Col>
+                  <>
+                    <ListGroup.Item className="p-0" key={list.id}>
+                      <Container fluid>
+                        <Row className="d-flex row justify-content center text-center  flex-grow-1 ">
+                          <Col className="flex-grow-1 p-0 " sm={3}>
+                            <ConfirmDeleteModal
+                              firestore={firestore}
+                              list={list}
+                              reload={reload}
+                              setO={setO}
+                            />{" "}
+                          </Col>
 
-                        <Col sm={8}>{list.data().title}</Col>
-                      </Row>
-                    </Container>
-                  </ListGroup.Item>
+                          <Col className="flex-grow-1 p-0 " sm={9}>
+                            <ListButton
+                              setListButton={setListButton}
+                              listButton={listButton}
+                              firestore={firestore}
+                              list={list}
+                              setO={setO}
+                              reload={reload}
+                            />
+                          </Col>
+                        </Row>
+                      </Container>
+                    </ListGroup.Item>
+                  </>
                 );
               })
             ) : (

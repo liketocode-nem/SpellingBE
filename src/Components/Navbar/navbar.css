@@ -14,6 +14,43 @@ nav {
   margin: 1%; */
 }
 
+.form-range::-moz-range-track {
+  background: linear-gradient(
+    to right,
+    var(--yellow) 0%,
+    var(--yellow) calc(var(--thumb-position) * 100%),
+    var(--white) calc(var(--thumb-position) * 100%),
+    var(--white) 100%
+  );
+}
+
+.form-range::-webkit-slider-runnable-track {
+  background: linear-gradient(
+    to right,
+    var(--yellow) 0%,
+    var(--yellow) calc(var(--thumb-position) * 100%),
+    white calc(var(--thumb-position) * 100%),
+    white 100%
+  );
+}
+
+.form-range::-webkit-slider-thumb {
+  background-color: var(--yellow);
+}
+
+.form-range::-moz-range-thumb {
+  background-color: var(--yellow);
+}
+
+.form-range::-webkit-slider-thumb:active {
+  background-color: var(--gray-yellow);
+  border: 0;
+}
+
+.form-range::-moz-range-thumb:active {
+  background-color: var(--gray-yellow);
+}
+
 .inactive {
   opacity: 0;
   filter: blur(2px);

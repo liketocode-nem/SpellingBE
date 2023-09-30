@@ -17,7 +17,7 @@ function ConfirmDeleteModal({ list, firestore, reload, setO }) {
   return (
     <>
       <Button
-        className="rounded-circle"
+        style={{ borderRadius: ".375rem 0 0 .375rem" }}
         onClick={() => {
           setShow(true);
           setO("o");
@@ -27,17 +27,18 @@ function ConfirmDeleteModal({ list, firestore, reload, setO }) {
 
           setDisabled(true);
         }}
-        variant="white-full"
+        variant="white-full "
+        className="w-100 h-100 list"
       >
         {" "}
-        <i className="bi bi-trash-fill"></i>
+        <i className="bi bi-trash-fill fs-5"></i>
       </Button>
       <Modal
         centered
         show={show}
         onHide={() => {
-          setShow(false);
           setO("");
+          setShow(false);
         }}
       >
         <Modal.Header>
@@ -91,6 +92,7 @@ function ConfirmDeleteModal({ list, firestore, reload, setO }) {
               onClick={() => {
                 handleListDelete();
                 setShow(false);
+
                 setO("");
               }}
             >
