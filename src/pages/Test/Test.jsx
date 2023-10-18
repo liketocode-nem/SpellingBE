@@ -5,10 +5,14 @@ import "./test.css";
 
 import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
-function Test({ firestore }) {
+import { useNavigate } from "react-router-dom";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+
+function Test({ firestore, user }) {
   const [wordsLength, setWordsLength] = useSessionStorage("wordsLength", []);
 
   const [ids, setIds] = useSessionStorage("ids");
+  const [titles, setTitles] = useSessionStorage("titles", []);
 
   const [words, setWords] = useState([]);
   const [defs, setDefs] = useState([]);
@@ -19,28 +23,51 @@ function Test({ firestore }) {
   const [spelling, setSpelling] = useState("");
   const [rate, setRate] = useSessionStorage("rate", 1); // Initial slider value
 
+  const [data, setData] = useSessionStorage("data", []);
+  const [oldTime, setOldTime] = useState();
+  const [percent, setPercent] = useSessionStorage("percent", []);
+
+  const navigate = useNavigate();
+  const [save, setSave] = useState(false);
+
   // keep track of list index
   const synthesis = window.speechSynthesis;
 
   useEffect(() => {
+    setOldTime(performance.now());
+    // console.log(oldTime);
     // This effect will run only once when the component is mounted (page loaded)
     const fetchData = async () => {
       const fetchedWords = []; // list used while processing ids
       const fetchedDefs = []; // list used while processing ids
-
+      const fetchedTitles = [];
       for (const id of ids) {
-        const docRef = doc(firestore, "lists", id);
-        const snapshot = await getDoc(docRef);
-        const value = snapshot.data();
+        if (id && firestore) {
+          const listRef = doc(firestore, "lists", id);
+          const snapshot = await getDoc(listRef);
+          const value = snapshot.data();
+          console.log(value);
 
-        if (value && value.words && value.defs) {
-          fetchedWords.push(...value.words);
-          fetchedDefs.push(...value.defs);
+          if (value && value.words && value.defs && value.title) {
+            console.log(value);
+
+            fetchedWords.push(...value.words);
+
+            fetchedDefs.push(...value.defs);
+            fetchedTitles.push(
+              value.title.length > 15
+                ? `${value.title.slice(0, 15)}...`
+                : value.title
+            );
+          }
         }
       }
-      setWords(fetchedWords); // now that the list is fully updated the other useeffect will fire
-      setDefs(fetchedDefs); // now that the list is fully updated the other useeffect will fire
+      setWords(fetchedWords); // now that the list is fully updated the other useffect will fire
+      console.log(fetchedWords);
+      setDefs(fetchedDefs); // now that the list is fully updated the other useffect will fire
       setWordsLength(fetchedWords.length);
+      setTitles(fetchedTitles);
+      setSave(true);
     };
 
     fetchData();
@@ -62,18 +89,47 @@ function Test({ firestore }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const time = (performance.now() - oldTime) / 1000; // time it took to spell the word / 1000 bc it is in milliseconds
 
-    if (spelling && spelling.toLowerCase() == words[count].toLowerCase()) {
+    setOldTime(performance.now());
+    if (spelling.toLowerCase() == words[count].toLowerCase()) {
       setCorrect(true);
+      if (percent[0]) {
+        setPercent([percent[0] + 1, percent[1]]); //adding one to the correct item
+      } else {
+        setPercent([1, percent[1]]); //if the value hasn't been updated, hard code 1 to avoid error
+      }
+      setData([
+        ...data,
+        {
+          seconds: +time.toFixed(1),
+          word: words[count],
+          def: defs[count],
+          correct: true,
+        },
+      ]);
     } else {
       setCorrect(false);
+      if (percent[1]) {
+        setPercent([percent[0], percent[1] + 1]); //adding one to the incorrect item
+      } else {
+        setPercent([percent[0], 1]);
+      }
+      setData([
+        ...data,
+        {
+          seconds: +time.toFixed(1),
+          word: words[count],
+          def: defs[count],
+          correct: false,
+        },
+      ]);
     }
-    setShow(false);
 
+    setShow(false);
     setShow(true);
     setMessage(words[count]);
     setSpelling("");
-
     if (synthesis) {
       const newCount = count + 1;
       sayWord(newCount, true);
@@ -94,6 +150,27 @@ function Test({ firestore }) {
     // Use the speechSynthesis object to speak the text
     synthesis.speak(utterance);
   };
+
+  const handleData = async () => {
+    const time = new Date();
+    const analyticsRef = collection(firestore, "analytics");
+
+    await addDoc(analyticsRef, {
+      data: data,
+      percent: percent,
+      uid: user.uid,
+      time: time.getTime(),
+      titles: titles,
+    });
+  };
+  useEffect(() => {
+    console.log("effect");
+    console.log(count, words.length);
+    if (count == words.length && save) {
+      handleData();
+      navigate("/end");
+    }
+  }, [count]);
 
   return (
     <section>

@@ -1,0 +1,25 @@
+.side-card {
+  font-size: 6em;
+}
+
+.card-button {
+  box-shadow: 0 0.125rem 0.25rem var(--gray-white);
+  transition: all 0.4s;
+}
+
+.card-button:hover {
+  box-shadow: 0 1rem 3rem var(--gray-white);
+}
+
+/* .over {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.over::-webkit-scrollbar {
+  display: none;
+  max-width: 0;
+
+  padding: 0;
+  margin: 0;
+} */

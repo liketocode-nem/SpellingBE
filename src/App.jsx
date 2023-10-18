@@ -15,7 +15,9 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 import { getFirestore } from "firebase/firestore";
 import { useEffect } from "react";
-
+import End from "./pages/End/End";
+import Analytics from "./pages/Analytics/Analytics";
+import Sharing from "./pages/Sharing/Sharing";
 function App() {
   const firebaseConfig = {
     apiKey: "AIzaSyBwQvr_Cgebq-WkZu5oxlzMOyRUgcYU-LQ",
@@ -41,7 +43,7 @@ function App() {
   return (
     <>
       <ScrollAnimations />
-      <SpellingBENavbar auth={auth} user={user} />
+      <SpellingBENavbar auth={auth} user={user} firestore={firestore} />
       <Routes>
         <Route path="/" element={page} />
 
@@ -52,6 +54,18 @@ function App() {
         <Route
           path="/lists"
           element={<Lists user={user} firestore={firestore} />}
+        />
+        <Route
+          path="/end"
+          element={<End user={user} firestore={firestore} />}
+        />
+        <Route
+          path="/analytics"
+          element={<Analytics user={user} firestore={firestore} />}
+        />
+        <Route
+          path="/sharing"
+          element={<Sharing user={user} firestore={firestore} />}
         />
       </Routes>
     </>

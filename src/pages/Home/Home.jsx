@@ -16,6 +16,9 @@ import "./home.css";
 function Home({ user, auth, firestore }) {
   const [count, setCount] = useSessionStorage("c", 0);
   const [testing, setTesting] = useSessionStorage("testing", false);
+  const [data, setData] = useSessionStorage("data", []);
+  const [percent, setPercent] = useSessionStorage("percent", []);
+  const [titles, setTitles] = useSessionStorage("titles", []);
 
   return (
     <section className="white">
@@ -31,6 +34,9 @@ function Home({ user, auth, firestore }) {
               onClick={() => {
                 setCount(0);
                 setTesting(true);
+                setData([]);
+                setPercent([]);
+                setTitles([]);
               }}
             >
               Start

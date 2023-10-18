@@ -118,3 +118,13 @@ section {
 .o {
   opacity: 0%;
 }
+.over {
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.over::-webkit-scrollbar:horizontal {
+  display: none;
+}

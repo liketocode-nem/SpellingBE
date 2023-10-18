@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button, Modal, Container, Row, Col, Form } from "react-bootstrap";
 import "./makelistmodal.css";
 import { collection, addDoc } from "firebase/firestore";
+import AutoDef from "./AutoDef";
 function MakeListModal({ firestore, user }) {
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState("");
@@ -11,7 +12,7 @@ function MakeListModal({ firestore, user }) {
   const [words, setWords] = useState([]);
   const [defs, setDefs] = useState([]);
   const [problem, setProblem] = useState("");
-
+  const [thisO, setThisO] = useState("");
   const listsRef = collection(firestore, "lists");
 
   const handleListCreate = async () => {
@@ -21,6 +22,7 @@ function MakeListModal({ firestore, user }) {
         words: words,
         defs: defs,
         uid: user.uid,
+        practice: false,
       });
       setTitle("");
       setProblem("");
@@ -61,13 +63,14 @@ function MakeListModal({ firestore, user }) {
           setWords([]);
         }}
         show={show}
+        className={`${thisO}`}
         centered
       >
         <Modal.Header>
           <Modal.Title className="fw-bold">Make List</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={(e) => e.preventDefault()}>
             {letAddItems ? (
               <div className="d-flex flex-column gap-2">
                 <Form.Control
@@ -78,14 +81,27 @@ function MakeListModal({ firestore, user }) {
                   }}
                   placeholder="Word"
                 />
-                <Form.Control
-                  value={def}
-                  onChange={(e) => {
-                    setDef(e.target.value);
-                    setProblem("");
-                  }}
-                  placeholder="Definition"
-                />
+                <Row>
+                  <Col lg={9}>
+                    <Form.Control
+                      value={def}
+                      onChange={(e) => {
+                        setDef(e.target.value);
+                        setProblem("");
+                      }}
+                      placeholder="Definition"
+                    />
+                  </Col>
+                  <Col lg={3}>
+                    <AutoDef
+                      word={word}
+                      setMasterDef={setDef}
+                      masterDef={def}
+                      setThisO={setThisO}
+                    />
+                  </Col>
+                </Row>
+
                 <Button onClick={handleListAdd} variant="yellow">
                   Add
                 </Button>

@@ -15,10 +15,16 @@ import "./navbar.css";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useSessionStorage } from "@uidotdev/usehooks";
 import { useNavigate } from "react-router-dom";
-function SpellingBENavbar({ auth, user }) {
-  //weird name because of bootsrap navbar
-  // getting a ref to change the margin of elements
-  const leftLength = useRef(null);
+import { collection, addDoc } from "firebase/firestore";
+
+//weird name because of bootstrap navbar
+function SpellingBENavbar({ auth, user, firestore }) {
+  const analyticsRef = collection(firestore, "analytics");
+  const [data, setData] = useSessionStorage("data", []);
+  const [percent, setPercent] = useSessionStorage("percent", []);
+  const [titles, setTitles] = useSessionStorage("titles", []);
+
+  const leftLength = useRef(null); // getting a ref to change the margin of elements
   const rightLength = useRef(null);
 
   let right = null;
@@ -49,28 +55,48 @@ function SpellingBENavbar({ auth, user }) {
           ? ["Lists", "Analytics", "Sharing"]
           : ["About", "Features", "Get Started"]
       );
+      document.title = user ? "SpellingBE - Home" : "SpellingBE";
     } else if (location.pathname == "/Lists") {
       if (!user) {
         navigate("/");
       }
-    } else if (location.pathname == "/test") {
+
+      setLeft(["Lists", "Analytics", "Sharing"]);
+      document.title = "SpellingBE - Lists";
+    } else if (location.pathname == "/Analytics") {
       if (!user) {
         navigate("/");
       }
 
-      setLeft([`${count + 1}`]);
+      document.title = "SpellingBE - Analytics";
+      setLeft(["Lists", "Analytics", "Sharing"]);
+    } else if (location.pathname == "/test") {
+      if (!user) {
+        navigate("/");
+      }
+      document.title = "SpellingBE - Test";
+
+      setLeft([`${count + 1}/${wordsLength}`]);
     } else if (location.pathname == "/end") {
       setTesting(false);
       if (!user) {
         navigate("/");
       }
+      document.title = "SpellingBE - End";
+      setLeft(["Lists", "Analytics", "Sharing"]);
+    } else if (location.pathname == "/Sharing") {
+      setTesting(false);
+      if (!user) {
+        navigate("/");
+      }
+      document.title = "SpellingBE | Sharing";
       setLeft(["Lists", "Analytics", "Sharing"]);
     }
   }, [location, user]);
 
   useEffect(() => {
     if (testing) {
-      setLeft([`${Math.min(count + 1, wordsLength)}`]); // word number is correct and not too high
+      setLeft([`${Math.min(count + 1, wordsLength)}/${wordsLength}`]); // word number is correct and not too high
     }
   }, [count]);
 
@@ -102,6 +128,17 @@ function SpellingBENavbar({ auth, user }) {
       {children}
     </div>
   ));
+
+  const handleData = async () => {
+    await addDoc(analyticsRef, {
+      data: data,
+      percent: percent,
+      uid: user.uid,
+      time: new Date(),
+      titles: titles,
+    });
+  };
+
   return (
     <Navbar expand="lg" fixed="top">
       <Container fluid className="m-2">
@@ -110,7 +147,7 @@ function SpellingBENavbar({ auth, user }) {
           <Nav ref={leftLength} className="navbar-nav">
             {left.map((item, i) => {
               // displaying the left side of navbar
-              console.log(item);
+
               return user ? (
                 testing ? ( // testing or no
                   <div key={i}>{item}</div> // not a Nav.Link bc you shouldn't be able to click
@@ -127,12 +164,19 @@ function SpellingBENavbar({ auth, user }) {
               );
             })}
           </Nav>
-          {user ? (
+          {user ? ( // is there a user signed in
             <Navbar.Brand
               className={`navbar-brand ${navLogoClass}`}
               href="#spellingbe"
               as={Link}
               to={testing ? "/end" : "/"}
+              onClick={
+                testing
+                  ? () => {
+                      handleData();
+                    }
+                  : null
+              }
             >
               <b>
                 {testing ? (
@@ -179,7 +223,8 @@ function SpellingBENavbar({ auth, user }) {
                   <>
                     <Dropdown>
                       <Dropdown.Toggle as={PictureDrop}>
-                        <Image src={user.photoURL} width="45px" roundedCircle />
+                        <Image src={user.photoURL} width="50px" roundedCircle />{" "}
+                        {/*old 45 */}
                       </Dropdown.Toggle>
                       <Dropdown.Menu>
                         <Dropdown.Item onClick={handleAuth}>

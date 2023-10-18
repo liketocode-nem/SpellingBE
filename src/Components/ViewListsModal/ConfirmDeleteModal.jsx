@@ -47,13 +47,20 @@ function ConfirmDeleteModal({ list, firestore, reload, setO }) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <p className="long text-start">
+            List: <b>{list.data().title}</b>
+          </p>
           <Form>
             <Form.Group>
               <Form.Control
                 value={input}
                 onChange={(e) => {
+                  console.log(list.data().title);
                   setInput(e.target.value);
-                  if (e.target.value === list.data().title) {
+                  if (
+                    e.target.value.replace(/\s/g, "") ===
+                    list.data().title.replace(/\s/g, "") // taking out the spaces in the values
+                  ) {
                     setClassTinyText("m-1 text-pro fw-semibold");
                     setTinyText("correct");
                     setDisabled(false);
@@ -64,14 +71,14 @@ function ConfirmDeleteModal({ list, firestore, reload, setO }) {
                   }
                 }}
                 type="text"
-                placeholder={`Type ${list.data().title}`}
+                placeholder={list.data().title}
               />
-              <Form.Label>
+              {/* <Form.Label>
                 {" "}
                 <p className={`${classTinyText} fw-semibold mt-2 text-start`}>
                   {tinyText}
                 </p>
-              </Form.Label>
+              </Form.Label> */}
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -88,7 +95,7 @@ function ConfirmDeleteModal({ list, firestore, reload, setO }) {
             </Button>
           ) : (
             <Button
-              variant="white"
+              variant="yellow"
               onClick={() => {
                 handleListDelete();
                 setShow(false);

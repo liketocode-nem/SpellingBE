@@ -4,6 +4,7 @@ import { useCollectionOnce } from "react-firebase-hooks/firestore";
 import { collection, query, where } from "firebase/firestore";
 import ListButton from "./ListButton";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
+import ShareListModal from "./ShareListModal";
 
 function ViewListsModal({ firestore, user }) {
   const [show, setShow] = useState(false);
@@ -13,7 +14,6 @@ function ViewListsModal({ firestore, user }) {
   let [listsData, loading, error, reload] = useCollectionOnce(
     query(listRef, where("uid", "==", user && user.uid))
   );
-
   const lists = listsData ? listsData.docs : [];
 
   return (
@@ -48,7 +48,7 @@ function ViewListsModal({ firestore, user }) {
                     <ListGroup.Item className="p-0" key={list.id}>
                       <Container fluid>
                         <Row className="d-flex row justify-content center text-center  flex-grow-1 ">
-                          <Col className="flex-grow-1 p-0 " sm={3}>
+                          <Col className="flex-grow-1 p-0 " sm={2}>
                             <ConfirmDeleteModal
                               firestore={firestore}
                               list={list}
@@ -56,8 +56,15 @@ function ViewListsModal({ firestore, user }) {
                               setO={setO}
                             />{" "}
                           </Col>
-
-                          <Col className="flex-grow-1 p-0 " sm={9}>
+                          <Col className="flex-grow-1 p-0 " sm={2}>
+                            <ShareListModal
+                              firestore={firestore}
+                              list={list}
+                              reload={reload}
+                              setO={setO}
+                            />{" "}
+                          </Col>
+                          <Col className="flex-grow-1 p-0 " sm={8}>
                             <ListButton
                               setListButton={setListButton}
                               listButton={listButton}

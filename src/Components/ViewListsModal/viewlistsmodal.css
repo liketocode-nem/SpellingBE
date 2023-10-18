@@ -12,16 +12,26 @@
   height: 163%;
   opacity: 100%;
 }
-.over {
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding-left: 15px;
+
+.long {
+  width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
 }
 
-.over::-webkit-scrollbar {
-  display: none;
-  max-width: 0;
+.accordion-button:focus,
+.accordion-button {
+  box-shadow: none !important;
+  background: none !important;
+  color: var(--black) !important;
+} /* remove all color from button */
 
-  padding: 0;
-  margin: 0;
+.accordion-button::after {
+  background-image: initial;
+  /* remove accordion arrow */
+}
+.accordion-button:not(.collapsed)::after {
+  background-image: initial;
+  /* remove accordion arrow */
 }

@@ -23,9 +23,9 @@ function LandingPage({ auth, user }) {
 
       <section className="black" id="About">
         <p className="hidden" id="about">
-          <b className="text-pro">SpellingBE</b> is an inclusive platform for
-          learning spelling. Ideal for those struggling with spelling who seek a
-          user-friendly practice solution.
+          <b className="text-pro">SpellingBE</b> is an easy to use and fun app
+          designed to elevate your spelling skills, by tailoring your Spelling
+          experience.
         </p>
         <div className="custom-shape-divider-top-1691527340">
           <svg
@@ -64,9 +64,9 @@ function LandingPage({ auth, user }) {
               <h4>Lists</h4>
               <Col lg={9}>
                 <p className="left text-gray">
-                  <b className="">SpellingBE </b>
-                  Lists provide a simple way to organize words for practice.
-                  Create custom lists or choose our carefully crafted presets.
+                  <b className="">Lists </b>
+                  provide a simple way to organize words for practice. You may
+                  create custom lists tailored to your needs.
                 </p>
               </Col>
             </Col>
@@ -76,12 +76,12 @@ function LandingPage({ auth, user }) {
               </div>
             </Col>
             <Col className="left hidden delay-400" lg={5}>
-              <h4>Analysis</h4>
+              <h4>Analytics</h4>
               <Col lg={9}>
                 <p className="left text-gray">
-                  <b className="">SpellingBE </b>
-                  Analysis tracks your progress and provides specialized data on
-                  your performance.
+                  <b className="">Analytics </b>
+                  tracks your progress and provides helpful data on your
+                  performance.
                 </p>
               </Col>
             </Col>
@@ -96,10 +96,9 @@ function LandingPage({ auth, user }) {
               <h4>Personalized Content</h4>
               <Col lg={9}>
                 <p className="left text-gray">
-                  <b className="">SpellingBE </b>
-                  Personalized Content offers custom practice lists exclusively
-                  for you, targeting words you've struggled with and chosen, for
-                  rapid spelling improvement.
+                  <b className="">Personalized Content </b>
+                  helps you improve by creating custom lists based on the words
+                  you've spelled incorrectly.
                 </p>
               </Col>
             </Col>
@@ -112,10 +111,9 @@ function LandingPage({ auth, user }) {
               <h4>Sharing</h4>
               <Col lg={9}>
                 <p className="left text-gray">
-                  <b className="">SpellingBE </b>
-                  Sharing is the simple way to share Analytics or Lists. Whether
-                  it's for a spelling test or showing off new Analytics, it's
-                  the perfect choice.
+                  <b className="">Sharing </b>
+                  is the simple way for students and teachers to share word
+                  lists, whether that be for a spelling or vocabulary skills.
                 </p>
               </Col>
             </Col>

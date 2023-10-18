@@ -30,6 +30,7 @@
   transition: all 0.4s;
 }
 .btn-basic {
+  background: var(--basic);
   color: var(--white);
   transition: all 0.4s;
 }

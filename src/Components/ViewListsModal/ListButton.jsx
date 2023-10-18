@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap";
 import { setDoc, doc } from "firebase/firestore";
 import "./viewlistsmodal.css";
-
+import AutoDef from "../MakeListModal/AutoDef";
 function ListButton({
   list,
   firestore,
@@ -21,12 +21,15 @@ function ListButton({
   const [show, setShow] = useState(false);
   const [add, setAdd] = useState(false);
   const [words, setWords] = useState([...list.data().words]);
+
   const [defs, setDefs] = useState([...list.data().defs]);
   const [word, setWord] = useState("");
   const [def, setDef] = useState("");
   const [problem, setProblem] = useState("");
   //to make sure delete and list modal do not open at the same time
   const [click, setClick] = useState(false);
+
+  const [thisO, setThisO] = useState("");
 
   const handleListUpdate = async () => {
     await setDoc(doc(firestore, "lists", list.id), {
@@ -80,6 +83,7 @@ function ListButton({
           setShow(false);
           setO("");
         }}
+        className={`${thisO}`}
       >
         <Modal.Header>
           <Modal.Title className="fw-bold">Edit and View List</Modal.Title>
@@ -97,10 +101,10 @@ function ListButton({
               }}
               variant="yellow mb-5 mt-4 "
             >
-              <i className="bi bi-plus-lg"></i>
+              <i style={{ paddingLeft: "16px" }} className="bi bi-plus-lg"></i>
             </Button>
 
-            <Row style={{ paddingLeft: "15px" }} className="pt-2 pb-2  ">
+            <Row style={{ paddingRight: "20px" }} className="pt-2 pb-2  ">
               <Col sm={1}></Col>
               <Col
                 sm={5}
@@ -123,7 +127,7 @@ function ListButton({
             </Row>
             <div
               style={{ maxHeight: "67vh", minWidth: "100%" }}
-              className="over"
+              className=" over"
             >
               {words.map((word, i) => {
                 return (
@@ -165,15 +169,25 @@ function ListButton({
                       sm={5}
                       className="  d-flex justify-content-center align-items-center"
                     >
-                      <Form.Control
-                        value={defs[i]}
-                        onChange={(e) => {
-                          const updatedDefs = [...defs];
-                          updatedDefs[i] = e.target.value;
-                          setDefs(updatedDefs);
-                        }}
-                        placeholder="Definition"
-                      />
+                      {defs[i] == "No definition" || defs[i] == "" ? (
+                        <AutoDef
+                          setThisO={setThisO}
+                          masterDefs={defs}
+                          setMasterDefs={setDefs}
+                          index={i}
+                          word={words[i]}
+                        />
+                      ) : (
+                        <Form.Control
+                          value={defs[i]}
+                          onChange={(e) => {
+                            const updatedDefs = [...defs];
+                            updatedDefs[i] = e.target.value;
+                            setDefs(updatedDefs);
+                          }}
+                          placeholder="Definition"
+                        />
+                      )}
                     </Col>
                   </Row>
                 );
@@ -189,6 +203,7 @@ function ListButton({
           setShow(true);
           handleListUpdate();
         }}
+        className={`${thisO}`}
         show={add}
       >
         <Modal.Header>
@@ -205,14 +220,28 @@ function ListButton({
                 }}
                 placeholder="Word"
               />
-              <Form.Control
-                value={def}
-                onChange={(e) => {
-                  setDef(e.target.value);
-                  setProblem("");
-                }}
-                placeholder="Definition"
-              />
+              <Row>
+                <Col lg={9}>
+                  {" "}
+                  <Form.Control
+                    value={def}
+                    onChange={(e) => {
+                      setDef(e.target.value);
+                      setProblem("");
+                    }}
+                    placeholder="Definition"
+                  />
+                </Col>
+                <Col lg={3}>
+                  <AutoDef
+                    word={word}
+                    setMasterDef={setDef}
+                    masterDef={def}
+                    setThisO={setThisO}
+                  />
+                </Col>
+              </Row>
+
               <Button type="submit" variant="yellow">
                 Add
               </Button>

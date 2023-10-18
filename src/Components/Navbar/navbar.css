@@ -1,11 +1,17 @@
 .navbar-brand {
-  font-size: 1.5rem;
+  font-size: 2rem;
+  /* old was 1.5em */
   margin-left: 16px;
 }
 
 .navbar-brand,
 .nav-link {
   color: var(--black);
+}
+
+.nav-link {
+  font-size: 1.1em;
+  /* old was default */
 }
 
 nav {
