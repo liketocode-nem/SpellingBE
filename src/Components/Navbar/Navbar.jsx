@@ -111,6 +111,9 @@ function SpellingBENavbar({ auth, user, firestore }) {
   const handleAuth = () => {
     if (!user) {
       const provider = new GoogleAuthProvider();
+      provider.setCustomParameters({
+        prompt: "select_account",
+      });
       signInWithPopup(auth, provider).then(() => {});
     }
 
