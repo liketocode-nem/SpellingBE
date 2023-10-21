@@ -26,8 +26,26 @@ function ListButton({
   const [word, setWord] = useState("");
   const [def, setDef] = useState("");
   const [problem, setProblem] = useState("");
-  //to make sure delete and list modal do not open at the same time
-  const [click, setClick] = useState(false);
+  const [scrollWidth, setScrollWidth] = useState("");
+
+  useEffect(() => {
+    // Creating invisible container
+    const outer = document.createElement("div");
+    outer.style.visibility = "hidden";
+    outer.style.overflow = "scroll"; // forcing scrollbar to appear
+    outer.style.msOverflowStyle = "scrollbar"; // needed for WinJS apps
+    document.body.appendChild(outer);
+
+    // Creating inner element and placing it in the container
+    const inner = document.createElement("div");
+    outer.appendChild(inner);
+
+    // Calculating difference between container's full width and the child width
+    setScrollWidth(outer.offsetWidth - inner.offsetWidth);
+    console.log(outer.offsetWidth - inner.offsetWidth);
+    // Removing temporary elements from the DOM
+    outer.parentNode.removeChild(outer);
+  }, []);
 
   const [thisO, setThisO] = useState("");
 
@@ -104,7 +122,10 @@ function ListButton({
               <i style={{ paddingLeft: "16px" }} className="bi bi-plus-lg"></i>
             </Button>
 
-            <Row style={{ paddingRight: "20px" }} className="pt-2 pb-2  ">
+            <Row
+              style={{ paddingRight: `${scrollWidth + 15}px` }}
+              className="pt-2 pb-2  "
+            >
               <Col sm={1}></Col>
               <Col
                 sm={5}
@@ -126,7 +147,11 @@ function ListButton({
               </Col>
             </Row>
             <div
-              style={{ maxHeight: "67vh", minWidth: "100%" }}
+              style={{
+                maxHeight: "67vh",
+                minWidth: "100%",
+                paddingRight: "15px",
+              }}
               className=" over"
             >
               {words.map((word, i) => {
