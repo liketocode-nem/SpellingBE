@@ -51,7 +51,18 @@ function LandingPage({ auth, user }) {
         </h1>
 
         <Container
-          style={{ marginRight: "6.8750vw", paddingTop: "5vh" }}
+          style={{ paddingTop: "5vh" }}
+          // marginRight: "6.8750vw",
+          // <Col className="left hidden delay-400" lg={5}>
+          //     <h4>Analytics</h4>
+          //     <Col lg={9}>
+          //       <p className="left text-gray">
+          //         <b className="">Analytics </b>
+          //         tracks your progress and provides helpful data on your
+          //         performance.
+          //       </p>
+          //     </Col>
+          //   </Col>
           className=""
         >
           <Row className="text-black">
@@ -62,13 +73,12 @@ function LandingPage({ auth, user }) {
             </Col>
             <Col className="left hidden delay-400" lg={5}>
               <h4>Lists</h4>
-              <Col lg={9}>
-                <p className="left text-gray">
-                  <b className="">Lists </b>
-                  provide a simple way to organize words for practice. You may
-                  create custom lists tailored to your needs.
-                </p>
-              </Col>
+
+              <p className="left text-gray">
+                <b className="">Lists </b>
+                provide a simple way to organize words for practice. You may
+                create custom lists tailored to your needs.
+              </p>
             </Col>
             <Col lg={1}>
               <div className="mx-auto pro icon-box hidden">
@@ -77,13 +87,12 @@ function LandingPage({ auth, user }) {
             </Col>
             <Col className="left hidden delay-400" lg={5}>
               <h4>Analytics</h4>
-              <Col lg={9}>
-                <p className="left text-gray">
-                  <b className="">Analytics </b>
-                  tracks your progress and provides helpful data on your
-                  performance.
-                </p>
-              </Col>
+
+              <p className="left text-gray">
+                <b className="">Analytics </b>
+                tracks your progress and provides helpful data on your
+                performance.
+              </p>
             </Col>
           </Row>
           <Row style={{ marginTop: "10vh" }} className="text-black">
@@ -94,13 +103,12 @@ function LandingPage({ auth, user }) {
             </Col>
             <Col className="left hidden delay-400" lg={5}>
               <h4>Personalized Content</h4>
-              <Col lg={9}>
-                <p className="left text-gray">
-                  <b className="">Personalized Content </b>
-                  helps you improve by creating custom lists based on the words
-                  you've spelled incorrectly.
-                </p>
-              </Col>
+
+              <p className="left text-gray">
+                <b className="">Personalized Content </b>
+                helps you improve by creating custom lists based on the words
+                you've spelled incorrectly.
+              </p>
             </Col>
             <Col lg={1}>
               <div className=" mx-auto pro icon-box hidden">
@@ -109,13 +117,12 @@ function LandingPage({ auth, user }) {
             </Col>
             <Col className="left hidden delay-400" lg={5}>
               <h4>Sharing</h4>
-              <Col lg={9}>
-                <p className="left text-gray">
-                  <b className="">Sharing </b>
-                  is the simple way for students and teachers to share word
-                  lists, whether that be for a spelling or vocabulary skills.
-                </p>
-              </Col>
+
+              <p className="left text-gray">
+                <b className="">Sharing </b>
+                is the simple way for students and teachers to share word lists,
+                whether that be for a spelling or vocabulary skills.
+              </p>
             </Col>
           </Row>
         </Container>
