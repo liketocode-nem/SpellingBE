@@ -24,7 +24,7 @@ function LandingPage({ auth, user }) {
       <section className="black" id="About">
         <p className="hidden" id="about">
           <b className="text-pro">SpellingBE</b> is an easy to use and fun app
-          designed to elevate your spelling skills, by tailoring your Spelling
+          designed to elevate your spelling skills, by tailoring your spelling
           experience.
         </p>
         <div className="custom-shape-divider-top-1691527340">
