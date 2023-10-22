@@ -119,11 +119,14 @@ function ListButton({
               }}
               variant="yellow mb-5 mt-4 "
             >
-              <i style={{ paddingLeft: "9px" }} className="bi bi-plus-lg"></i>
+              <i
+                style={{ paddingLeft: `${scrollWidth}px` }}
+                className="bi bi-plus-lg"
+              ></i>
             </Button>
 
             <Row
-              style={{ paddingRight: `${scrollWidth + 9}px` }}
+              style={{ paddingRight: `${scrollWidth}px` }}
               className="pt-2 pb-2  "
             >
               <Col sm={1}></Col>
@@ -195,9 +198,9 @@ function ListButton({
                       className="  d-flex justify-content-center align-items-center"
                     >
                       <div
-                        style={{
-                          marginRight: "10px",
-                        }}
+                        // style={{
+                        //   marginRight: "10px",
+                        // }}
                         className="vl"
                       ></div>
                     </Col>
