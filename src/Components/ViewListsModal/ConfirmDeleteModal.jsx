@@ -48,7 +48,7 @@ function ConfirmDeleteModal({ list, firestore, reload, setO }) {
         </Modal.Header>
         <Modal.Body>
           <p className="long text-start">
-            List: <b>{list.data().title}</b>
+            Type <b>{list.data().title}</b> to confirm delete
           </p>
           <Form>
             <Form.Group>
