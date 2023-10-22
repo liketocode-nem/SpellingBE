@@ -101,7 +101,7 @@ function ListButton({
           setShow(false);
           setO("");
         }}
-        className={`${thisO}`}
+        className={`${thisO} `}
       >
         <Modal.Header>
           <Modal.Title className="fw-bold">Edit and View List</Modal.Title>
@@ -119,11 +119,11 @@ function ListButton({
               }}
               variant="yellow mb-5 mt-4 "
             >
-              <i style={{ paddingLeft: "16px" }} className="bi bi-plus-lg"></i>
+              <i style={{ paddingLeft: "9px" }} className="bi bi-plus-lg"></i>
             </Button>
 
             <Row
-              style={{ paddingRight: `${scrollWidth + 15}px` }}
+              style={{ paddingRight: `${scrollWidth + 9}px` }}
               className="pt-2 pb-2  "
             >
               <Col sm={1}></Col>
@@ -150,7 +150,6 @@ function ListButton({
               style={{
                 maxHeight: "67vh",
                 minWidth: "100%",
-                paddingRight: "15px",
               }}
               className=" over"
             >
@@ -162,6 +161,10 @@ function ListButton({
                       className=" d-flex justify-content-center align-items-center"
                     >
                       <Button
+                        style={{
+                          marginLeft: "30px",
+                          display: "inline-block",
+                        }}
                         className="rounded-circle "
                         onClick={() => handleItemDelete(i)}
                         variant="white-full"
@@ -175,6 +178,9 @@ function ListButton({
                       className=" d-flex justify-content-center align-items-center"
                     >
                       <Form.Control
+                        style={{
+                          marginLeft: "10px",
+                        }}
                         value={words[i]}
                         onChange={(e) => {
                           const updatedWords = [...words];
@@ -188,7 +194,12 @@ function ListButton({
                       sm={1}
                       className="  d-flex justify-content-center align-items-center"
                     >
-                      <div className="vl"></div>
+                      <div
+                        style={{
+                          marginRight: "10px",
+                        }}
+                        className="vl"
+                      ></div>
                     </Col>
                     <Col
                       sm={5}
@@ -204,6 +215,9 @@ function ListButton({
                         />
                       ) : (
                         <Form.Control
+                          style={{
+                            marginRight: "10px",
+                          }}
                           value={defs[i]}
                           onChange={(e) => {
                             const updatedDefs = [...defs];
