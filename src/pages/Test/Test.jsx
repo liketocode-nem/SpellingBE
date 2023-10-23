@@ -35,7 +35,6 @@ function Test({ firestore, user }) {
 
   useEffect(() => {
     setOldTime(performance.now());
-    // console.log(oldTime);
     // This effect will run only once when the component is mounted (page loaded)
     const fetchData = async () => {
       const fetchedWords = []; // list used while processing ids
@@ -46,11 +45,8 @@ function Test({ firestore, user }) {
           const listRef = doc(firestore, "lists", id);
           const snapshot = await getDoc(listRef);
           const value = snapshot.data();
-          console.log(value);
 
           if (value && value.words && value.defs && value.title) {
-            console.log(value);
-
             fetchedWords.push(...value.words);
 
             fetchedDefs.push(...value.defs);
@@ -63,7 +59,6 @@ function Test({ firestore, user }) {
         }
       }
       setWords(fetchedWords); // now that the list is fully updated the other useffect will fire
-      console.log(fetchedWords);
       setDefs(fetchedDefs); // now that the list is fully updated the other useffect will fire
       setWordsLength(fetchedWords.length);
       setTitles(fetchedTitles);
@@ -164,8 +159,6 @@ function Test({ firestore, user }) {
     });
   };
   useEffect(() => {
-    console.log("effect");
-    console.log(count, words.length);
     if (count == words.length && save) {
       handleData();
       navigate("/end");

@@ -55,7 +55,6 @@ function ConfirmDeleteModal({ list, firestore, reload, setO }) {
               <Form.Control
                 value={input}
                 onChange={(e) => {
-                  console.log(list.data().title);
                   setInput(e.target.value);
                   if (
                     e.target.value.replace(/\s/g, "") ===

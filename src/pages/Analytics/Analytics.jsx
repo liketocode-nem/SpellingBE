@@ -40,7 +40,6 @@ function Analytics({ user, firestore }) {
 
       return timeRangeDate; // Return the updated state value
     });
-    console.log(analytics);
   }, [changeTime]);
 
   const analyticsRef = collection(firestore, "analytics");
@@ -135,7 +134,6 @@ function Analytics({ user, firestore }) {
                           <Button
                             onClick={() => {
                               setData(doc.data);
-                              console.log(doc.data);
                               setPercent(doc.percent);
                               setTitles(doc.titles);
                               navigate("/end");

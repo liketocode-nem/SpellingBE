@@ -44,7 +44,6 @@ function ListButton({
 
     // Calculating difference between container's full width and the child width
     setScrollWidth(outer.offsetWidth - inner.offsetWidth);
-    console.log(outer.offsetWidth - inner.offsetWidth);
     // Removing temporary elements from the DOM
     outer.parentNode.removeChild(outer);
   }, []);

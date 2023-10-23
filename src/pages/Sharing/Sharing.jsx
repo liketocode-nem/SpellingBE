@@ -18,7 +18,6 @@ function Sharing({ firestore, user }) {
     const docRef = doc(firestore, "lists", code);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
       await addDoc(listRef, {
         title: docSnap.data().title,
         words: docSnap.data().words,

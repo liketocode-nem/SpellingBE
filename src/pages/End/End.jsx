@@ -66,7 +66,6 @@ function End({ firestore, user }) {
       uid: user.uid,
       practice: true,
     });
-    console.log("created");
   };
 
   return (

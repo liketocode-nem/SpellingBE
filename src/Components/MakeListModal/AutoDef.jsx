@@ -12,7 +12,7 @@ function AutoDef({ word, setThisO, setMasterDef, masterDef }) {
     setThisO("o");
 
     setShowDef(true);
-    console.log(word);
+
     fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`, {
       method: "GET",
     })
