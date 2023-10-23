@@ -13,16 +13,17 @@ function MakeListModal({ firestore, user }) {
   const [defs, setDefs] = useState([]);
   const [problem, setProblem] = useState("");
   const [thisO, setThisO] = useState("");
+  const [practice, setPractice] = useState(false);
   const listsRef = collection(firestore, "lists");
 
   const handleListCreate = async () => {
     if (words && defs) {
       await addDoc(listsRef, {
+        practice: "true",
         title: title,
         words: words,
         defs: defs,
         uid: user.uid,
-        practice: false,
       });
       setTitle("");
       setProblem("");
@@ -33,7 +34,7 @@ function MakeListModal({ firestore, user }) {
   const handleListAdd = () => {
     if (word) {
       setWords([...words, word]);
-      def ? setDefs([def, ...defs]) : setDefs(["No definition", ...defs]);
+      def ? setDefs([...defs, def]) : setDefs([...defs, "No definition"]);
       setWord("");
       setDef("");
       return;
@@ -48,6 +49,8 @@ function MakeListModal({ firestore, user }) {
           setShow(!show);
           setLetAddItems();
           setProblem("");
+          setWords([]);
+          setDefs([]);
         }}
         variant="yellow"
       >

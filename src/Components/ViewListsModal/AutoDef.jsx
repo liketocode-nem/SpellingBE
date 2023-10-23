@@ -1,7 +1,7 @@
 import { Button, Modal, Accordion, ListGroup, Form } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useSessionStorage } from "@uidotdev/usehooks";
-function AutoDef({ word, setThisO, index, masterDefs, setMasterDefs }) {
+export function AutoDef({ word, setThisO, index, masterDefs, setMasterDefs }) {
   const [showDef, setShowDef] = useState(false);
   const [data, setData] = useState([]);
   const [form, setForm] = useState(false); // should it display the defs or a form
@@ -107,4 +107,3 @@ function AutoDef({ word, setThisO, index, masterDefs, setMasterDefs }) {
     </>
   );
 }
-export default AutoDef;

@@ -10,7 +10,9 @@ import {
 } from "react-bootstrap";
 import { setDoc, doc } from "firebase/firestore";
 import "./viewlistsmodal.css";
+import { AutoDef as ListAutoDef } from "./AutoDef";
 import AutoDef from "../MakeListModal/AutoDef";
+
 function ListButton({
   list,
   firestore,
@@ -209,7 +211,7 @@ function ListButton({
                       className="  d-flex justify-content-center align-items-center"
                     >
                       {defs[i] == "No definition" || defs[i] == "" ? (
-                        <AutoDef
+                        <ListAutoDef
                           setThisO={setThisO}
                           masterDefs={defs}
                           setMasterDefs={setDefs}
