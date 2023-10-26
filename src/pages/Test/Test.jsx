@@ -175,7 +175,7 @@ function Test({ firestore, user }) {
           </Alert.Heading>
           <hr />
           <p className="mb-0">
-            The correct selling is <b>{message}</b>
+            The correct spelling is <b>{message}</b>
           </p>
         </Alert>
       )}
