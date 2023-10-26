@@ -27,12 +27,12 @@ function ListsModal({ firestore, user }) {
       ? query(
           listRef,
           where("uid", "==", user && user.uid),
-          where("practice", "==", true)
+          where("practice", "==", "true")
         )
       : query(
           listRef,
           where("uid", "==", user && user.uid),
-          where("practice", "==", false)
+          where("practice", "==", "false")
         )
   );
 

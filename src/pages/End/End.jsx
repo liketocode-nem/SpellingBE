@@ -64,7 +64,7 @@ function End({ firestore, user }) {
       words: newWords,
       defs: newDefs,
       uid: user.uid,
-      practice: true,
+      practice: "true",
     });
   };
 

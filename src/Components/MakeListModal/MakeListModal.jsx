@@ -19,7 +19,7 @@ function MakeListModal({ firestore, user }) {
   const handleListCreate = async () => {
     if (words && defs) {
       await addDoc(listsRef, {
-        practice: "true",
+        practice: "false",
         title: title,
         words: words,
         defs: defs,

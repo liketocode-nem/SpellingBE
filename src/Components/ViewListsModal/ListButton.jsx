@@ -56,6 +56,7 @@ function ListButton({
       defs: defs,
       title: list.data().title,
       uid: list.data().uid,
+      practice: list.data().practice,
     });
   };
 
